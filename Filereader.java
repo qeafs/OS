@@ -2,8 +2,11 @@ import java.util.ArrayList;
 
 public class Filereader extends Thread{
     
-public ArrayList<ProcessTable> pcb = new ArrayList<ProcessTable>();
-        ProcessTable pcb1 = new ProcessTable();
+    public ArrayList<ProcessTable> pcb = new ArrayList<ProcessTable>();
+
+//array list each item is an pbject from Process table each object contains the neccecarry infrormation 
+// the whole array list IS the process Table 
+        ProcessTable pcb1 = new ProcessTable(1,30,4);
 
         
 
@@ -11,9 +14,7 @@ public ArrayList<ProcessTable> pcb = new ArrayList<ProcessTable>();
 
 @Override
 public void run(){
-    pcb1.setId(30);         //testing how to add processes to the PCB
-    pcb1.setMemory(50);
-    pcb1.setTime(4);
+    //just testing 
     pcb.add(pcb1);
 }
 
