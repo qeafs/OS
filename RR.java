@@ -1,5 +1,10 @@
-public class RR {
-    public void ww(){
-    System.out.println("hi");
+public class RR extends Thread {
+    int freememory = 1024;
+    
+
+
+    @Override
+    public void run(){
+
     }
 }
