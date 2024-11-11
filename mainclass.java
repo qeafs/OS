@@ -37,13 +37,15 @@ class mainclass{
     }
 
     public static void doRR(){
-
+            
     }
     public static void doFCFS(){
 
     }
 
     public static void doSJF(){
+        SJF runnable = new SJF();
+        Thread thread1 = new Thread(runnable);
 
     }
 }    
