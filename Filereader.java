@@ -1,10 +1,14 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Filereader implements Runnable{
     
-    public ArrayList<ProcessTable> pcb = new ArrayList<ProcessTable>();
+    public static ArrayList<ProcessTable> pcb = new ArrayList<ProcessTable>();
 //array list each item is an object from Process table each object contains the neccecarry infrormation 
 // the whole array list IS the process Table (that is my idea)
+        public static ArrayList<ProcessTable> getMyList() {
+            return pcb;
+      }   
 
         
 
