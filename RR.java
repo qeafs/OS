@@ -1,4 +1,4 @@
-public class RR extends Thread {
+public class RR implements Runnable {
     int freememory = 1024;
     
 

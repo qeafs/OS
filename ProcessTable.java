@@ -2,11 +2,15 @@ import java.util.ArrayList;
 
 public class ProcessTable {
     
+
+    public ArrayList<ProcessTable> pcb = new ArrayList<ProcessTable>();
+    
     public ProcessTable(int id, int time, int memory){
         this.id = id;
         this.time = time;
         this.memory = memory;
     }
+
 
     int id;
     int time;

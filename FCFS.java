@@ -1,7 +1,7 @@
-public class FCFS extends Thread{
+public class FCFS implements Runnable{
     
     int freememory = 1024;
-    
+
 
 
     @Override
