@@ -7,6 +7,6 @@ public class SJF implements Runnable{
 
     @Override
     public void run(){
-        System.out.println();
+        System.out.println("sjf executed");
     }
 }

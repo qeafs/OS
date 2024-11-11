@@ -46,6 +46,7 @@ class mainclass{
     public static void doSJF(){
         SJF runnable = new SJF();
         Thread thread1 = new Thread(runnable);
+        thread1.start();
 
     }
 }    
