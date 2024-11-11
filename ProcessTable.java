@@ -4,11 +4,17 @@ public class ProcessTable {
     
 
     public ArrayList<ProcessTable> pcb = new ArrayList<ProcessTable>();
-    
+
     public ProcessTable(int id, int time, int memory){
         this.id = id;
         this.time = time;
         this.memory = memory;
+    }
+
+    public ProcessTable(ProcessTable p){
+        p.id = id;
+        p.time = time;
+        p.memory = memory;
     }
 
 

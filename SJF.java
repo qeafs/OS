@@ -7,9 +7,11 @@ public class SJF implements Runnable{
 
     @Override
     public void run(){
-
-        System.out.println("sjf executed");
-        Filereader.getMyList().remove(0);
+        ProcessTable sj = new ProcessTable(Filereader.getMyList().get(0)); //shortest job is first job right now
+        for(int i=0; i<Filereader.getMyList().size(); i++){
+           
+        }
+       
 
     }
 }
