@@ -8,8 +8,7 @@ public class Filereader extends Thread{
 
         ProcessTable pcb1 = new ProcessTable(1,30,4);
 
-
-
+//i like to make a new object for each process 
 @Override
 public void run(){
     //just testing 
