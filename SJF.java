@@ -2,13 +2,15 @@ import java.util.ArrayList;
 
 public class SJF implements Runnable{
     
-    int freememory = 1024;
+    public static int freememory = 1024;
     public static ArrayList<PCB> readyqueue = new ArrayList<PCB>();
 
     public static ArrayList<PCB> getMyList() {
         return readyqueue;
   }   
-
+    public static int getFreememory(){
+        return freememory;
+    }
 
     @Override
     public void run(){
@@ -22,7 +24,7 @@ public class SJF implements Runnable{
            if(sj.bursttime > Filereader.getMyList().get(i).bursttime)
            sj = Filereader.getMyList().get(i);
         }
-        while(!(freememory >= sj.memory));
+        while(freememory < sj.memory);
             freememory = freememory - sj.memory;
            
             readyqueue.add(sj);
