@@ -3,25 +3,29 @@ import java.util.ArrayList;
 public class SJF implements Runnable{
     
     int freememory = 1024;
-    public static ArrayList<ProcessTable> readyqueue = new ArrayList<ProcessTable>();
+    public static ArrayList<PCB> readyqueue = new ArrayList<PCB>();
 
 
     @Override
     public void run(){
         
-        ProcessTable sj = new ProcessTable(Filereader.getMyList().get(0)); 
+        PCB sj = Filereader.getMyList().get(0);
         //shortest job is first job right now
 
         //find the shortest job in the jobqueue.
+        while(true){
         for(int i=0; i<Filereader.getMyList().size(); i++){
-           if(sj.getTime() > Filereader.getMyList().get(i).time)
+           if(sj.bursttime > Filereader.getMyList().get(i).bursttime)
            sj = Filereader.getMyList().get(i);
         }
-        if(freememory >= sj.memory){
+        while(!(freememory >= sj.memory)){
             freememory = freememory - sj.memory;
+            sj.state = "ready";
             readyqueue.add(sj);
+            Filereader.getMyList().remove(sj);
         }
        
 
     }
+}
 }
