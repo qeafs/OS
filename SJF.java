@@ -13,6 +13,9 @@ public class SJF implements Runnable{
         return freememory;
             }       
 
+    public static void setFreememory(int freememory) {
+        SJF.freememory = freememory;
+    }
     @Override
     public void run(){
         

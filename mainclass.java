@@ -39,6 +39,7 @@ class mainclass{
     public static void doRR(){
             
     }
+    
     public static void doFCFS(){
 
     }
