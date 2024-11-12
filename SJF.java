@@ -5,6 +5,10 @@ public class SJF implements Runnable{
     int freememory = 1024;
     public static ArrayList<PCB> readyqueue = new ArrayList<PCB>();
 
+    public static ArrayList<PCB> getMyList() {
+        return readyqueue;
+  }   
+
 
     @Override
     public void run(){
