@@ -2,13 +2,11 @@ public class processreadyqueue implements Runnable {
     
     int freemem;
 
- 
-
     public void run(){
-        
+
     while(true){
         //when starting the thread we need a loop forever tp proccess anything new.
-        while(!SJF.getMyList().isEmpty()); //wait while empty
+        while(!SJF.getMyList().isEmpty()){ //wait while empty
         PCB currentProcess = SJF.getMyList().get(0);
             
              // PRocessing the job:
@@ -26,6 +24,7 @@ public class processreadyqueue implements Runnable {
                  System.out.println("Process " + currentProcess.getId() + 
                                   " completed. Free memory: " + freemem+"MB");
              }
+            }
     }
 
     }

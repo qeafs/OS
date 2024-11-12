@@ -22,7 +22,7 @@ public void run() {
     //This thread should read the text file and create jobs and add them to the job queue.
 
     //while reading the file
-   readtextfile("job.txt");
+   readtextfile("C:\\Users\\moham\\OneDrive\\Desktop\\job.txt");
 }
 
 
