@@ -6,7 +6,7 @@ public class SJF implements Runnable{
     public int avreagewaitingtime =0;
     public static ArrayList<PCB> readyqueue = new ArrayList<PCB>();
 
-    public static ArrayList<PCB> getMyList() {
+    public static ArrayList<PCB> getMyList2() {
         return readyqueue;
         }   
     public static int getfreememory(){

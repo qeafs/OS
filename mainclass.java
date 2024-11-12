@@ -46,8 +46,15 @@ class mainclass{
 
     public static void doSJF(){
         SJF runnable = new SJF();
+        Filereader runnable2 = new Filereader();
+        processreadyqueue runnable3 = new processreadyqueue();
+        Thread thread3 = new Thread(runnable3);
+        Thread thread2 = new Thread(runnable2);
         Thread thread1 = new Thread(runnable);
-        thread1.start();
+        thread2.start(); //start the file reader thread to fill the jobqueue
+        thread1.start();// start the sjf thread to fill the ready queue
+        thread3.start();// start the processing thread .
+        
 
     }
 }    

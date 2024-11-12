@@ -6,8 +6,8 @@ public class processreadyqueue implements Runnable {
 
     while(true){
         //when starting the thread we need a loop forever tp proccess anything new.
-        while(!SJF.getMyList().isEmpty()){ //wait while empty
-        PCB currentProcess = SJF.getMyList().get(0);
+        while(!SJF.getMyList2().isEmpty()){ //wait while empty
+        PCB currentProcess = SJF.getMyList2().get(0);
             
              // PRocessing the job:
              currentProcess.bursttime--;
@@ -17,8 +17,8 @@ public class processreadyqueue implements Runnable {
              // Check if the job is done.
              if (currentProcess.bursttime <= 0) {
                 freemem = SJF.getfreememory();
-                freemem = freemem + SJF.getMyList().get(0).getMemory();
-                SJF.getMyList().remove(0);
+                freemem = freemem + SJF.getMyList2().get(0).getMemory();
+                SJF.getMyList2().remove(0);
                  SJF.setFreememory(freemem);
 
                  System.out.println("Process " + currentProcess.getId() + 
