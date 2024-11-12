@@ -7,4 +7,9 @@ public class RR implements Runnable {
     public void run(){
 
     }
+    //testbkjgug
+    public int getfreememory(){
+        int i = 0;
+        return freememory;
+    }
 }
