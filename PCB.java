@@ -2,7 +2,7 @@ public class PCB {
 int id;
 int bursttime;
 int memory;
-String state;
+
 double WaitingTime;
 double TurnaroundTime;
 
@@ -10,7 +10,7 @@ public PCB(int id, int bursttime, int memory) {
     this.id = id;
     this.bursttime = bursttime; 
     this.memory = memory;
-    this.state = "waiting";
+    
     this.WaitingTime = 0;
     this.TurnaroundTime = 0;
 }
@@ -19,7 +19,7 @@ public PCB(PCB pcb){
     this.id = pcb.id;
     this.bursttime = pcb.bursttime;
     this.memory = pcb.memory;
-    this.state = pcb.state;
+ 
     this.WaitingTime = pcb.WaitingTime;
     this.TurnaroundTime = pcb.TurnaroundTime;
 }
@@ -47,13 +47,6 @@ public void setMemory(int memory) {
     this.memory = memory;
 }
 
-public String getState() {
-    return state;
-}
-
-public void setState(String state) {
-    this.state = state;
-}
 
 public double getWaitingTime() {
     return WaitingTime;

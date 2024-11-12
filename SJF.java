@@ -18,12 +18,12 @@ public class SJF implements Runnable{
            if(sj.bursttime > Filereader.getMyList().get(i).bursttime)
            sj = Filereader.getMyList().get(i);
         }
-        while(!(freememory >= sj.memory)){
+        while(!(freememory >= sj.memory));
             freememory = freememory - sj.memory;
-            sj.state = "ready";
+           
             readyqueue.add(sj);
             Filereader.getMyList().remove(sj);
-        }
+        
        
 
     }
