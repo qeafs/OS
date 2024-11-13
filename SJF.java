@@ -19,7 +19,7 @@ public class SJF implements Runnable{
     @Override
     public void run(){
          
-        
+       
         
             
         //find the shortest job in the jobqueue.
@@ -38,5 +38,7 @@ public class SJF implements Runnable{
             }
         }
            
-}
+  }
+
+     
 }
