@@ -4,6 +4,7 @@ public class SJF implements Runnable{
     
     public static int freememory = 1024;
     public int avreagewaitingtime =0;
+    public static int totaljobs =0;
     public static ArrayList<PCB> readyqueue = new ArrayList<PCB>();
 
     public static ArrayList<PCB> getMyList2() {
@@ -19,8 +20,6 @@ public class SJF implements Runnable{
     @Override
     public void run(){
          
-       
-        
             
         //find the shortest job in the jobqueue.
         while(!Filereader.getMyList().isEmpty()){
@@ -33,12 +32,15 @@ public class SJF implements Runnable{
             if(freememory >= sj.memory){    
             freememory = freememory - sj.memory;
             readyqueue.add(sj);//add to ready queue.
-           
+            totaljobs++;
             Filereader.getMyList().remove(sj); //remove from job queue.
             }
         }
            
   }
+    public static int getTotaljobs() {
+        return totaljobs;
+    }
 
      
 }

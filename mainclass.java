@@ -62,7 +62,7 @@ class mainclass{
     static void waitforabit(){
         double t1 =  java.lang.System.currentTimeMillis();
         long x= -999999999;
-        while(x<1000000)x++;
+        while(x<999999999)x++;
 
          double t2 = java.lang.System.currentTimeMillis();
          double t3 = t2-t1;
