@@ -14,18 +14,12 @@ public class Filereader implements Runnable{
             return jobqueue;
       }   
 
-        
-
-
 @Override
 public void run() {
     readtextfile("C:\\Users\\moham\\OneDrive\\Desktop\\job.txt");
     System.out.println("File read successfully");
     
 }
-
-
-
 
 public void readtextfile(String fileName) {
     if (!(fileName.toLowerCase().endsWith(".txt"))) {
