@@ -31,12 +31,12 @@ public class RR implements Runnable {
     private void moveProcessesToReadyQueue() {
         for (int i = 0; i < Filereader.getMyList().size(); i++) {
             PCB process = Filereader.getMyList().get(i);
-            if (freememory >= process.memory) {
+            while(!(freememory >= process.memory));
                 freememory -= process.memory;
                 readyQueue.add(process);
                 Filereader.getMyList().remove(i);
                 i--;
-            }
+            
         }
     }
 

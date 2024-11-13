@@ -45,9 +45,8 @@ class mainclass{
         Thread thread3 = new Thread(runnable3);
         thread1.run();
         waitforabit();
-        thread2.run();
-        waitforabit();
-        thread3.run();
+        thread2.start();
+        thread3.start();
     }
     
     public static void doFCFS(){
