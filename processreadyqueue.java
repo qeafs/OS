@@ -1,9 +1,14 @@
 public class processreadyqueue implements Runnable {
     
+
+            /////////////////////////////////////////////////////
+            ///////////////THIS IS FOR SJF ONLY//////////////////
+            /////////////////////////////////////////////////////
+            
     int freemem;
     int timewaiting =0;
     public void run(){
-
+            
     while(true){
         //when starting the thread we need a loop forever tp proccess anything new.
         while(!SJF.getMyList2().isEmpty()){ //wait while empty
