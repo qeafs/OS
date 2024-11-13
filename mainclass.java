@@ -55,7 +55,7 @@ class mainclass{
         thread2.start(); //start the file reader thread to fill the jobqueue
         waitforabit();
         thread1.start();// start the sjf thread to fill the ready queue
-        thread3.start();// start the processing thread .
+       // thread3.start();// start the processing thread .
         
             /* 
             Filereader runnable2 = new Filereader();
@@ -67,8 +67,8 @@ class mainclass{
     }
     static void waitforabit(){
         double t1 =  java.lang.System.currentTimeMillis();
-        long x= -99999;
-        while(x<10000)x++;
+        long x= -999999999;
+        while(x<1000000)x++;
 
         double t2 = java.lang.System.currentTimeMillis();
         double t3 = t2-t1;

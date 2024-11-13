@@ -19,22 +19,27 @@ public class SJF implements Runnable{
     @Override
     public void run(){
          
-        PCB sj = Filereader.getMyList().get(0);
-        //shortest job is first job right now
+        
+        
             
         //find the shortest job in the jobqueue.
         while(!Filereader.getMyList().isEmpty()){
-        for(int i=0; i<Filereader.getMyList().size(); i++){
+            PCB sj = Filereader.getMyList().get(0);//shortest job is first job right now
+            
+         for(int i=0; i<Filereader.getMyList().size(); i++){
            if(sj.bursttime > Filereader.getMyList().get(i).bursttime)
            sj = Filereader.getMyList().get(i);
-        }
-        while(freememory < sj.memory);      
-            freememory = freememory - sj.memory;
-           
+            }
+            if(freememory >= sj.memory){    
+            //freememory = freememory - sj.memory;
             readyqueue.add(sj);//add to ready queue.
-            Filereader.getMyList().remove(sj); //remove from job queue.
+            System.err.println("SJ id is :"+sj.id);
+            for(int i =0; i<Filereader.getMyList().size(); i++)
+            System.out.println(Filereader.getMyList().get(i).id);  // Debugging output
 
-    }
+            Filereader.getMyList().remove(sj); //remove from job queue.
+            }
+        }
            
 }
 }

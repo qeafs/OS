@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Filereader implements Runnable{
-    public static ArrayList<PCB> jobqueue = new ArrayList<PCB>();
+    
+    public static ArrayList<PCB> jobqueue = new ArrayList<>();
 //array list each item is an object from Process table each object contains the neccecarry infrormation 
 // the whole array list IS the process Table (that is my idea)
-        public static ArrayList<PCB> getMyList() {
+        public static synchronized ArrayList<PCB> getMyList() {
             return jobqueue;
       }   
 
@@ -50,6 +51,7 @@ public void readtextfile(String fileName) {
         }
         fileScanner.close();
         
+
     } catch (FileNotFoundException e) {
         System.err.println("File not found: " + fileName);
     } catch (NumberFormatException e) {
