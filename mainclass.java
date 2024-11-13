@@ -5,7 +5,7 @@ class mainclass{
     public static void main (String[] args){
 
         Scanner input = new Scanner(System.in);
-
+           
         int done =0;
         while (done ==0){
             
@@ -32,8 +32,8 @@ class mainclass{
         else{
             System.out.println("Please choose 1, 2, or 3");
         }
-                 }
-        
+      }
+    input.close();
     }
 
     public static void doRR(){
@@ -68,6 +68,7 @@ class mainclass{
          double t3 = t2-t1;
          System.err.println(t3+"ms taken by wait func");
      }
+     
    
     
-}    
+}
