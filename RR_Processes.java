@@ -3,7 +3,7 @@ public class RR_Processes implements Runnable {
    private double totalWaitingTime = 0;
    private double totalTurnaroundTime = 0;
    private int totalProcesses = 0;
-   private boolean empty = false;
+   private int dummy = 0;
    private StringBuilder timeline = new StringBuilder();
    private int currentTime = 0;
    private StringBuilder numbersTimeline = new StringBuilder();
@@ -30,6 +30,10 @@ private void executeProcesses() {
     }
 
     PCB currentProcess = RR.getReadyQueue().remove(0);
+    if (dummy == 0){
+        numbersTimeline.append(0).append("   ");
+        dummy = 1;
+    }
     
     if (currentProcess.bursttime > TIME_QUANTUM) {
         currentProcess.TurnaroundTime+=TIME_QUANTUM;
@@ -64,7 +68,7 @@ private void executeProcesses() {
     }
 }
 private void printResults(){
-    RR.getReadyQueue().sort((a,b) -> Integer.compare(a.getId(), b.getId()));
+    RR.DoneProcesses.sort((a,b)-> Integer.compare(a.getId(), b.getId()));
     System.out.println(timeline);
     System.out.println(numbersTimeline);
     System.out.println(" Waiting Times: " );
