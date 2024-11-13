@@ -55,7 +55,7 @@ class mainclass{
         thread2.start(); //start the file reader thread to fill the jobqueue
         waitforabit();
         thread1.start();// start the sjf thread to fill the ready queue
-       // thread3.start();// start the processing thread .
+        thread3.start();// start the processing thread .
         
             /* 
             Filereader runnable2 = new Filereader();
