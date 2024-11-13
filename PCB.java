@@ -6,6 +6,7 @@ int memory;
 double WaitingTime;
 int startingtime;
 int finishtime;
+int ogbursttime;
 double TurnaroundTime;
 
 public PCB(int id, int bursttime, int memory) {
@@ -17,6 +18,7 @@ public PCB(int id, int bursttime, int memory) {
     this.TurnaroundTime = 0;
     this.startingtime =0;
     this.finishtime =0;
+    this.ogbursttime = bursttime;
 }
 
 public PCB(PCB pcb){
@@ -28,6 +30,7 @@ public PCB(PCB pcb){
     this.TurnaroundTime = pcb.TurnaroundTime;
     this.startingtime =pcb.startingtime;
     this.finishtime =pcb.finishtime;
+    this.ogbursttime = pcb.bursttime;
 }
 public int getId() {
     return id;
