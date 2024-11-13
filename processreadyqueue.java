@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class processreadyqueue implements Runnable {
     
 
@@ -8,6 +10,7 @@ public class processreadyqueue implements Runnable {
     int freemem;
     int timewaiting =0;
     public static int donejobs =0;
+    public static ArrayList<PCB> finishedjobslist = new ArrayList<PCB>();
     public void run(){
             
     while(true){

@@ -72,7 +72,7 @@ class mainclass{
         double t1 =  java.lang.System.currentTimeMillis();
         long x= -999999999;
         while(x<999999999)x++;
-
+        
          double t2 = java.lang.System.currentTimeMillis();
          double t3 = t2-t1;
          System.err.println(t3+"ms taken by wait func");
