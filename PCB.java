@@ -3,7 +3,7 @@ int id;
 int bursttime;
 int memory;
 
-double WaitingTime;
+int WaitingTime;
 int startingtime;
 int finishtime;
 int ogbursttime;
@@ -57,11 +57,11 @@ public void setMemory(int memory) {
 }
 
 
-public double getWaitingTime() {
+public int getWaitingTime() {
     return WaitingTime;
 }
 
-public void setWaitingTime(double waitingTime) {
+public void setWaitingTime(int waitingTime) {
     this.WaitingTime = waitingTime;
 }
 

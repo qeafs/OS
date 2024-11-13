@@ -55,15 +55,17 @@ public class processreadyqueue implements Runnable {
     }
     
     public void peinttheresult(){
+        calcwaittime();
         System.out.println(" SJF Output:");
-
         for(int i=0; i<completedjobs.size(); i++){
             PCB currentProcess = completedjobs.get(i);
-            System.out.print(" | j" + currentProcess.getId());
-    
+            System.out.printf("| j%-3d",currentProcess.getId());}
+            System.out.println("|");
+        for(int i=0; i<completedjobs.size(); i++){
+            System.out.printf("%-6d",completedjobs.get(i).WaitingTime);    
                                     }
-            System.out.println(" |");
-        System.out.println("-Turnaround Times:");
+            
+        System.out.println("\n-Turnaround Times:");
         for(int i=0; i<completedjobs.size(); i++){
         PCB currentProcess = completedjobs.get(i);
         System.out.print("j" + currentProcess.getId() +
@@ -72,14 +74,16 @@ public class processreadyqueue implements Runnable {
                                 }
     }
 
-    public int calcwaittime(PCB process){
-        if(process.id == 0)
-        return 0;
+    public void calcwaittime(){
+        completedjobs.get(0).WaitingTime=0;
+        int totalwaittime =0;
         for(int i =1; i<completedjobs.size(); i++){
-
+            totalwaittime = totalwaittime + completedjobs.get(i-1).ogbursttime;
+            completedjobs.get(i).setWaitingTime(totalwaittime);
+           
         }
         
-        return 0;
+        return ;
     }
 
    
