@@ -62,8 +62,9 @@ class mainclass{
         Thread thread2 = new Thread(runnable2);
         Thread thread1 = new Thread(runnable);
         thread2.start(); //start the file reader thread to fill the jobqueue
-        waitforabit();  //we wait for the file reader thread to get a head start 
+        //waitforabit();  //we wait for the file reader thread to get a head start 
         thread1.start();// start the sjf thread to fill the ready queue
+      
         thread3.start();// start the processing thread .
         
            
