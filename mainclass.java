@@ -36,8 +36,18 @@ class mainclass{
     input.close();
     }
 
-    public static void doRR(){
-            
+    public static void doRR(){  
+        Filereader runnable = new Filereader(); 
+        RR runnable2 = new RR();
+        RR_Processes runnable3 = new RR_Processes();
+        Thread thread1 = new Thread(runnable);
+        Thread thread2 = new Thread(runnable2);
+        Thread thread3 = new Thread(runnable3);
+        thread1.run();
+        waitforabit();
+        thread2.run();
+        waitforabit();
+        thread3.run();
     }
     
     public static void doFCFS(){

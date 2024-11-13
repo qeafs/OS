@@ -19,10 +19,9 @@ public class Filereader implements Runnable{
 
 @Override
 public void run() {
-    //This thread should read the text file and create jobs and add them to the job queue.
-
-    //while reading the file
-   readtextfile("C:\\Users\\moham\\OneDrive\\Desktop\\job.txt");
+    readtextfile("C:\\Users\\waleed\\Downloads\\job.txt");
+    System.out.println("File read successfully");
+    
 }
 
 
