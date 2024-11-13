@@ -69,7 +69,7 @@ public class processreadyqueue implements Runnable {
                                     System.err.print(""+totaltime);
             
         //Turnaround time
-        System.out.println("\n-Turnaround Times:");
+        System.out.println("\n\n-Turnaround Times:");
         int tTurnaround =0;
         for(int i=0; i<completedjobs.size(); i++){
         PCB currentProcess = completedjobs.get(i);
@@ -79,14 +79,25 @@ public class processreadyqueue implements Runnable {
 
                                 }
         
-        System.out.println("\n-Waiting Time:");
+        System.out.println("\n\n-Waiting Times:");
         for(int i=0; i<completedjobs.size(); i++){
         PCB currentProcess = completedjobs.get(i);
         System.out.print("j" + currentProcess.getId() +
                                   ": "+currentProcess.WaitingTime+"ms, ");
 
                                 }
-
+        
+        System.out.println("\n\n-Average Turnaround Time:");
+        tTurnaround =0;
+        int totalTurnaround=0;
+        System.out.print("(");
+            for(int i=0; i<completedjobs.size(); i++){
+            PCB currentProcess = completedjobs.get(i);
+            tTurnaround = currentProcess.ogbursttime + tTurnaround;
+            totalTurnaround = tTurnaround + totalTurnaround;
+            ;System.out.print(tTurnaround+" + ");
+                    }
+                    System.out.print(tTurnaround+")"+"/"+completedjobs.size()+" = "+totalTurnaround/completedjobs.size()+"ms"); 
     }
 
     public int calcwaittime(){
