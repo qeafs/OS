@@ -15,14 +15,14 @@ public class processreadyqueue implements Runnable {
 
     public void run(){
         try {
-            Thread.sleep(50);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
     while(true){
         processjobs();
-        System.err.print("");
+       System.out.println(" ");
         if(SJF.getMyList2().isEmpty()){
             peinttheresult();
             break;
@@ -76,7 +76,7 @@ public class processreadyqueue implements Runnable {
         if(process.id == 0)
         return 0;
         for(int i =1; i<completedjobs.size(); i++){
-            
+
         }
         
         return 0;
