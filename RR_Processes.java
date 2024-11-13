@@ -41,19 +41,19 @@ private void executeProcesses() {
         currentTime += TIME_QUANTUM;
         timeline.append("| J").append(currentProcess.getId()).append(" ");
         numbersTimeline.append(currentTime).append("   ");
-        for(int i = 0; i < RR.DoneProcesses.size(); i++){
-            RR.DoneProcesses.get(i).WaitingTime = RR.DoneProcesses.get(i).WaitingTime + TIME_QUANTUM;
+        for(int i = 0; i < RR.getReadyQueue().size(); i++){
+            RR.getReadyQueue().get(i).WaitingTime = RR.getReadyQueue().get(i).WaitingTime + TIME_QUANTUM;
         }
         System.out.println("| J" + currentProcess.getId() + " |");
             RR.getReadyQueue().add(currentProcess);
     } else {
         RR.freememory += currentProcess.memory;
-        System.out.println("| J" + currentProcess.getId() + " |");
+       /*  System.out.println("| J" + currentProcess.getId() + " |");
         System.out.println("process J" + currentProcess.getId() + " finished");
         System.out.println("Remaining processes in the ready queue:");
         for (PCB process : RR.getReadyQueue()) {
             System.out.println("J" + process.getId() + " (Remaining processing time: " + process.getBursttime() + ")");
-        }
+        }*/
         currentTime += currentProcess.bursttime;
         currentProcess.TurnaroundTime = currentProcess.WaitingTime + currentProcess.bursttime + currentProcess.TurnaroundTime;
       
@@ -62,8 +62,8 @@ private void executeProcesses() {
         timeline.append("| J").append(currentProcess.getId()).append(" ");
         numbersTimeline.append(currentTime).append("   ");
         RR.DoneProcesses.add(currentProcess);
-        for(int i = 0; i < RR.DoneProcesses.size(); i++){
-            RR.DoneProcesses.get(i).WaitingTime = RR.DoneProcesses.get(i).WaitingTime + currentProcess.bursttime;
+        for(int i = 0; i < RR.getReadyQueue().size(); i++){
+            RR.getReadyQueue().get(i).WaitingTime = RR.getReadyQueue().get(i).WaitingTime + currentProcess.bursttime;
         }
     }
 }
