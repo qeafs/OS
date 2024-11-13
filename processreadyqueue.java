@@ -56,7 +56,7 @@ public class processreadyqueue implements Runnable {
     
     public void peinttheresult(){
          int totaltime = calcwaittime();
-        System.out.println(" SJF Output:");
+        System.out.println("\n\n SJF Output:");
 
         //Grantt chart
         for(int i=0; i<completedjobs.size(); i++){
@@ -122,9 +122,9 @@ public class processreadyqueue implements Runnable {
                     }
                     currentProcess = completedjobs.get(index2);
                     totalwaitingtime = Ttotaltime + totalwaitingtime;
-                    System.out.print(Ttotaltime+")"+"/"+completedjobs.size()+" = "+totalwaitingtime/completedjobs.size()+"ms"); 
+                    System.out.println(Ttotaltime+")"+"/"+completedjobs.size()+" = "+totalwaitingtime/completedjobs.size()+"ms"); 
 
-        
+        System.out.println("-------------------------------------------------------------------------------------------");
     
     }
 
