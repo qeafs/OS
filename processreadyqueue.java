@@ -66,7 +66,7 @@ public class processreadyqueue implements Runnable {
         for(int i=0; i<completedjobs.size(); i++){
             System.out.printf("%-6d",completedjobs.get(i).WaitingTime);    
                                     }
-                                    System.err.print(""+totaltime);
+                                    System.out.print(""+totaltime);
             
         //Turnaround time
         System.out.println("\n\n-Turnaround Times:");
@@ -86,18 +86,46 @@ public class processreadyqueue implements Runnable {
                                   ": "+currentProcess.WaitingTime+"ms, ");
 
                                 }
+
+
         
         System.out.println("\n\n-Average Turnaround Time:");
         tTurnaround =0;
         int totalTurnaround=0;
+        int index =0;
         System.out.print("(");
-            for(int i=0; i<completedjobs.size(); i++){
-            PCB currentProcess = completedjobs.get(i);
+            for(index=0; index<completedjobs.size()-1; index++){
+            PCB currentProcess = completedjobs.get(index);
             tTurnaround = currentProcess.ogbursttime + tTurnaround;
             totalTurnaround = tTurnaround + totalTurnaround;
             ;System.out.print(tTurnaround+" + ");
                     }
+                    PCB currentProcess = completedjobs.get(index);
+                    tTurnaround = currentProcess.ogbursttime + tTurnaround;
+                    totalTurnaround = tTurnaround + totalTurnaround;
                     System.out.print(tTurnaround+")"+"/"+completedjobs.size()+" = "+totalTurnaround/completedjobs.size()+"ms"); 
+                    
+
+
+
+
+        System.out.println("\n\n-Average Waiting Time:");
+        int Ttotaltime =0;
+        int totalwaitingtime=0;
+        int index2=0;
+        System.out.print("(");
+            for(index2=0; index2<completedjobs.size()-1; index2++){
+             currentProcess = completedjobs.get(index2);
+            totalwaitingtime = Ttotaltime + totalwaitingtime;
+            ;System.out.print(Ttotaltime+" + ");
+            Ttotaltime = currentProcess.ogbursttime + Ttotaltime;
+                    }
+                    currentProcess = completedjobs.get(index2);
+                    totalwaitingtime = Ttotaltime + totalwaitingtime;
+                    System.out.print(Ttotaltime+")"+"/"+completedjobs.size()+" = "+totalwaitingtime/completedjobs.size()+"ms"); 
+
+        
+    
     }
 
     public int calcwaittime(){
