@@ -6,7 +6,7 @@ public class processreadyqueue implements Runnable {
             /////////////////////////////////////////////////////
             ///////////////THIS IS FOR SJF ONLY//////////////////
             /////////////////////////////////////////////////////
-            
+            //////////////you can copy but DO NOT change the code please
     int freemem;
     int timewaiting =0;
     public static int donejobs =0;
