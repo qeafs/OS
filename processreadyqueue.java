@@ -37,7 +37,8 @@ public class processreadyqueue implements Runnable {
             PCB currentProcess = SJF.getMyList2().get(0);
            
                  // PRocessing the job:
-               currentProcess.bursttime--; 
+               currentProcess.bursttime--;
+               currentProcess.WaitingTime++;
      
                  // Check if the job is done.
                  if (currentProcess.bursttime <= 0) {
@@ -54,7 +55,14 @@ public class processreadyqueue implements Runnable {
     }
     
     public void peinttheresult(){
+        System.out.println(" SJF Output:");
 
+        for(int i=0; i<completedjobs.size(); i++){
+            PCB currentProcess = completedjobs.get(i);
+            System.out.print(" | j" + currentProcess.getId());
+    
+                                    }
+            System.out.println(" |");
         System.out.println("-Turnaround Times:");
         for(int i=0; i<completedjobs.size(); i++){
         PCB currentProcess = completedjobs.get(i);
@@ -64,6 +72,15 @@ public class processreadyqueue implements Runnable {
                                 }
     }
 
+    public int calcwaittime(PCB process){
+        if(process.id == 0)
+        return 0;
+        for(int i =1; i<completedjobs.size(); i++){
+            
+        }
+        
+        return 0;
+    }
 
    
 }
