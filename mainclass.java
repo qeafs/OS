@@ -1,5 +1,5 @@
-import java.util.*;
 import java.util.Scanner;
+
 class mainclass{
 
     public static void main (String[] args){
@@ -45,6 +45,7 @@ class mainclass{
     }
 
     public static void doSJF(){
+        
         SJF runnable = new SJF();
         Filereader runnable2 = new Filereader();
         processreadyqueue runnable3 = new processreadyqueue();
@@ -52,9 +53,27 @@ class mainclass{
         Thread thread2 = new Thread(runnable2);
         Thread thread1 = new Thread(runnable);
         thread2.start(); //start the file reader thread to fill the jobqueue
+        waitforabit();
         thread1.start();// start the sjf thread to fill the ready queue
         thread3.start();// start the processing thread .
         
-
+            /* 
+            Filereader runnable2 = new Filereader();
+            Thread thread2 = new Thread(runnable2);
+            thread2.start(); //start the file reader thread to fill the jobqueue
+            waitforabit();
+            System.err.println(Filereader.getMyList().get(0).id);
+            */
     }
+    static void waitforabit(){
+        double t1 =  java.lang.System.currentTimeMillis();
+        long x= -99999;
+        while(x<10000)x++;
+
+        double t2 = java.lang.System.currentTimeMillis();
+        double t3 = t2-t1;
+        System.err.println(t3+"ms taken by wait func");
+    }
+   
+    
 }    
