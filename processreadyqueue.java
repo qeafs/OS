@@ -22,7 +22,7 @@ public class processreadyqueue implements Runnable {
 
     while(true){
         processjobs();
-       System.out.println(" ");
+       //System.out.println(" ");
         if(SJF.getMyList2().isEmpty()){
             peinttheresult();
             break;
@@ -32,8 +32,10 @@ public class processreadyqueue implements Runnable {
     }
 
     public void processjobs(){
+
+        while(SJF.getMyList2().isEmpty());
         //when starting the thread we need a loop forever tp proccess anything new.
-        while(!SJF.getMyList2().isEmpty()){ //wait while empty
+        while(!SJF.getMyList2().isEmpty()){ // while not empty
             PCB currentProcess = SJF.getMyList2().get(0);
            
                  // PRocessing the job:
