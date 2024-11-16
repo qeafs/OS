@@ -1,0 +1,78 @@
+
+public class FCFS_Processes implements Runnable {
+
+    private int currentTime = 0; // Tracks elapsed time
+    private StringBuilder timeline = new StringBuilder();
+    private StringBuilder numbersTimeline = new StringBuilder();
+    private double totalWaitingTime = 0;
+    private double totalTurnaroundTime = 0;
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(200); // Allow FCFS thread to initialize
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        while (true) {
+            executeProcesses();
+
+            if (FCFS.empty && FCFS.getReadyQueue().isEmpty()) {
+                printResults();
+                break; // Stop when all processes are completed
+            }
+        }
+    }
+
+    private void executeProcesses() {
+        if (FCFS.getReadyQueue().isEmpty()) {
+            return; // No processes to execute
+        }
+
+        PCB currentProcess = FCFS.getReadyQueue().remove(0); // Dequeue first process
+        numbersTimeline.append(currentTime).append("   ");
+        timeline.append("| J").append(currentProcess.getId()).append(" ");
+
+        // Calculate waiting time
+        currentProcess.WaitingTime = currentTime;
+
+        // Simulate process execution
+        currentTime += currentProcess.bursttime;
+        numbersTimeline.append(currentTime).append("   ");
+
+        // Calculate turnaround time
+        currentProcess.TurnaroundTime = currentTime;
+
+        // Update totals for statistics
+        FCFS.DoneProcesses.add(currentProcess);
+        totalWaitingTime += currentProcess.WaitingTime;
+        totalTurnaroundTime += currentProcess.TurnaroundTime;
+
+        // Free memory after process execution
+        FCFS.freememory += currentProcess.memory;
+    }
+
+    private void printResults() {
+        System.out.println("\nFCFS Timeline:");
+        System.out.println(timeline);
+        System.out.println(numbersTimeline);
+
+        System.out.println("\nWaiting Times:");
+        for (PCB process : FCFS.DoneProcesses) {
+            System.out.println("J" + process.getId() + ": " + process.WaitingTime + "ms");
+        }
+
+        System.out.println("\nTurnaround Times:");
+        for (PCB process : FCFS.DoneProcesses) {
+            System.out.println("J" + process.getId() + ": " + process.TurnaroundTime + "ms");
+        }
+
+        // Calculate and print averages
+        double avgWaitingTime = totalWaitingTime / FCFS.DoneProcesses.size();
+        double avgTurnaroundTime = totalTurnaroundTime / FCFS.DoneProcesses.size();
+
+        System.out.printf("\nAverage Waiting Time: %.2fms\n", avgWaitingTime);
+        System.out.printf("Average Turnaround Time: %.2fms\n", avgTurnaroundTime);
+    }
+}

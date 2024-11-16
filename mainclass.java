@@ -50,16 +50,16 @@ class mainclass{
     }
     
     public static void doFCFS(){
-                FCFS runnable = new FCFS();
-        Filereader runnable2 = new Filereader();
+        Filereader runnable = new Filereader();
+        FCFS runnable2 = new FCFS();
         processreadyqueue runnable3 = new processreadyqueue();
         Thread thread1 = new Thread(runnable);
         Thread thread2 = new Thread(runnable2);
         Thread thread3 = new Thread(runnable3);
-        thread1.start();  //start the file reader thread to fill the jobqueue
-        waitforabit();    //we wait for the file reader thread to get a head start 
-        thread2.start();  // start the fcfs thread to fill the ready queue
-        thread3.start();  // start the processing thread
+        thread1.start();
+        waitforabit();
+        thread2.start();
+        thread3.start();
 
     }
 
