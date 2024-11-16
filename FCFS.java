@@ -6,6 +6,7 @@ public class FCFS implements Runnable {
     public static boolean empty = false; // Flag to indicate job queue is empty
     public static ArrayList<PCB> readyQueue = new ArrayList<>(); // Ready queue
     public static ArrayList<PCB> DoneProcesses = new ArrayList<>(); // Completed processes
+    public static boolean nextprocessisreadytoenter = false;
 
     public static ArrayList<PCB> getReadyQueue() {
         return readyQueue;
@@ -20,7 +21,7 @@ public class FCFS implements Runnable {
         }
 
         while (true) {
-            moveProcessesToReadyQueue();
+            movetoready();
 
             if (Filereader.getMyList().isEmpty()) {
                 empty = true; // Mark job queue as empty
@@ -34,13 +35,30 @@ public class FCFS implements Runnable {
 
     private void moveProcessesToReadyQueue() {
         for (int i = 0; i < Filereader.getMyList().size(); i++) {
-            PCB process = Filereader.getMyList().get(i);
-            if (freememory >= process.memory) {
+            PCB process = Filereader.getMyList().get(0);
+            if(freememory >= process.memory){nextprocessisreadytoenter = true; System.out.println(" next process is ready");}
+            else nextprocessisreadytoenter = false;
+
+            while(freememory < process.memory); 
                 freememory -= process.memory; // Allocate memory
                 readyQueue.add(process); // Add to ready queue
                 Filereader.getMyList().remove(i); // Remove from job queue
+                System.out.println("Process "+process.id+" added ");
                 i--;
+        }
+    }
+
+    private void movetoready(){
+        while(!Filereader.getMyList().isEmpty()){
+            PCB cp = Filereader.getMyList().get(0);//shortest job is first job right now
+
+            if(freememory >= cp.memory){
+                System.out.println("I am moving Process "+cp.id+" to ready queue");     
+            freememory = freememory - cp.memory;
+            readyQueue.add(cp);//add to ready queue.
+            Filereader.getMyList().remove(cp); //remove from job queue.
             }
         }
+           
     }
 }

@@ -52,7 +52,7 @@ class mainclass{
     public static void doFCFS(){
         Filereader runnable = new Filereader();
         FCFS runnable2 = new FCFS();
-        processreadyqueue runnable3 = new processreadyqueue();
+        FCFS_Processes runnable3 = new FCFS_Processes();
         Thread thread1 = new Thread(runnable);
         Thread thread2 = new Thread(runnable2);
         Thread thread3 = new Thread(runnable3);

@@ -16,7 +16,7 @@ public class Filereader implements Runnable{
 
 @Override
 public void run() {
-    readtextfile("E:\\job.txt");
+    readtextfile("C:\\Users\\Hmmodii\\Desktop\\job.txt");
     System.out.println("File read successfully");
     
 }

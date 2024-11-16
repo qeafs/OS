@@ -16,6 +16,7 @@ public class FCFS_Processes implements Runnable {
         }
 
         while (true) {
+           // while (FCFS.nextprocessisreadytoenter == false) {}
             executeProcesses();
 
             if (FCFS.empty && FCFS.getReadyQueue().isEmpty()) {
@@ -26,11 +27,13 @@ public class FCFS_Processes implements Runnable {
     }
 
     private void executeProcesses() {
-        if (FCFS.getReadyQueue().isEmpty()) {
-            return; // No processes to execute
-        }
+        
+        while(FCFS.getReadyQueue().isEmpty());
+        //when starting the thread we need a loop forever tp proccess anything new.
 
-        PCB currentProcess = FCFS.getReadyQueue().remove(0); // Dequeue first process
+        PCB currentProcess = FCFS.getReadyQueue().get(0); // Dequeue first process
+        FCFS.getReadyQueue().remove(0); 
+        System.out.println("i am processing "+ currentProcess.id);
         numbersTimeline.append(currentTime).append("   ");
         timeline.append("| J").append(currentProcess.getId()).append(" ");
 
