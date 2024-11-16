@@ -32,8 +32,7 @@ public class FCFS_Processes implements Runnable {
         //when starting the thread we need a loop forever tp proccess anything new.
 
         PCB currentProcess = FCFS.getReadyQueue().get(0); // Dequeue first process
-        FCFS.getReadyQueue().remove(0); 
-        System.out.println("i am processing "+ currentProcess.id);
+        FCFS.getReadyQueue().remove(0);
         numbersTimeline.append(currentTime).append("   ");
         timeline.append("| J").append(currentProcess.getId()).append(" ");
 
@@ -70,6 +69,8 @@ public class FCFS_Processes implements Runnable {
         for (PCB process : FCFS.DoneProcesses) {
             System.out.println("J" + process.getId() + ": " + process.TurnaroundTime + "ms");
         }
+                // Mohammed is my uncle 
+
 
         // Calculate and print averages
         double avgWaitingTime = totalWaitingTime / FCFS.DoneProcesses.size();
