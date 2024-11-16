@@ -35,7 +35,6 @@ public class processreadyqueue implements Runnable {
 
         while(SJF.getMyList2().isEmpty());
         //when starting the thread we need a loop forever tp proccess anything new.
-        // Mohammed is my uncle 
         while(!SJF.getMyList2().isEmpty()){ // while not empty
             PCB currentProcess = SJF.getMyList2().get(0);
            

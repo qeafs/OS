@@ -1,8 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-
 import java.util.ArrayList;
-
 import java.util.Scanner;
 
 public class Filereader implements Runnable{
@@ -16,7 +14,7 @@ public class Filereader implements Runnable{
 
 @Override
 public void run() {
-    readtextfile("C:\\Users\\Hmmodii\\Desktop\\job.txt");
+    readtextfile("D://firefox downloads//job.txt");
     System.out.println("File read successfully");
     
 }

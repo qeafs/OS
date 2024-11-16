@@ -52,8 +52,7 @@ public class FCFS implements Runnable {
         while(!Filereader.getMyList().isEmpty()){
             PCB cp = Filereader.getMyList().get(0);//shortest job is first job right now
 
-            if(freememory >= cp.memory){
-                System.out.println("I am moving Process "+cp.id+" to ready queue");     
+            if(freememory >= cp.memory){    
             freememory = freememory - cp.memory;
             readyQueue.add(cp);//add to ready queue.
             Filereader.getMyList().remove(cp); //remove from job queue.
