@@ -8,9 +8,9 @@ public class SJF implements Runnable{
     public static int getTotaljobs() {
         return totaljobs;
     }
-    public static ArrayList<PCB> readyqueue = new ArrayList<PCB>();
+    public static volatile ArrayList<PCB> readyqueue = new ArrayList<PCB>();
 
-    public static ArrayList<PCB> getMyList2() {
+    public static synchronized ArrayList<PCB> getMyList2() {
         return readyqueue;
         }   
     public static synchronized int getfreememory(){
