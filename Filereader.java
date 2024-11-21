@@ -14,7 +14,7 @@ public class Filereader implements Runnable{
 
 @Override
 public void run() {
-    readtextfile("D://firefox downloads//job.txt");
+    readtextfile("C:\\Users\\waleed\\Downloads\\job.txt");
     System.out.println("File read successfully");
     
 }
@@ -29,7 +29,7 @@ public void readtextfile(String fileName) {
         
         while (fileScanner.hasNextLine()) {
             String line = fileScanner.nextLine();
-            String[] parts = line.split("[:|;]"); // تقسيم السطر باستخدام : أو ;
+            String[] parts = line.split("[:|;]"); 
             
             if (parts.length == 3) {
                 int id = Integer.parseInt(parts[0]);

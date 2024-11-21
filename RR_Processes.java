@@ -7,7 +7,7 @@ public class RR_Processes implements Runnable {
    private StringBuilder timeline = new StringBuilder();
    private int currentTime = 0;
    private StringBuilder numbersTimeline = new StringBuilder();
-
+   public static boolean block = false;
     @Override
     public void run(){
         try {
@@ -36,24 +36,25 @@ private void executeProcesses() {
     }
     
     if (currentProcess.bursttime > TIME_QUANTUM) {
+      
+
         currentProcess.TurnaroundTime+=TIME_QUANTUM;
         currentProcess.bursttime -= TIME_QUANTUM;
         currentTime += TIME_QUANTUM;
         timeline.append("| J").append(currentProcess.getId()).append(" ");
         numbersTimeline.append(currentTime).append("   ");
+        block = true;
         for(int i = 0; i < RR.getReadyQueue().size(); i++){
             RR.getReadyQueue().get(i).WaitingTime = RR.getReadyQueue().get(i).WaitingTime + TIME_QUANTUM;
         }
-        System.out.println("| J" + currentProcess.getId() + " |");
+        block = false;
+ 
             RR.getReadyQueue().add(currentProcess);
+         
     } else {
-        RR.freememory += currentProcess.memory;
-       /*  System.out.println("| J" + currentProcess.getId() + " |");
-        System.out.println("process J" + currentProcess.getId() + " finished");
-        System.out.println("Remaining processes in the ready queue:");
-        for (PCB process : RR.getReadyQueue()) {
-            System.out.println("J" + process.getId() + " (Remaining processing time: " + process.getBursttime() + ")");
-        }*/
+       
+       
+        //----------------------------------------------------------------------------
         currentTime += currentProcess.bursttime;
         currentProcess.TurnaroundTime = currentProcess.WaitingTime + currentProcess.bursttime + currentProcess.TurnaroundTime;
       
@@ -65,6 +66,12 @@ private void executeProcesses() {
         for(int i = 0; i < RR.getReadyQueue().size(); i++){
             RR.getReadyQueue().get(i).WaitingTime = RR.getReadyQueue().get(i).WaitingTime + currentProcess.bursttime;
         }
+        RR.freememory += currentProcess.memory;
+       try {
+        Thread.sleep(100);
+       } catch (InterruptedException e) {
+        e.printStackTrace();
+       }
     }
 }
 private void printResults(){
@@ -109,6 +116,8 @@ private void printResults(){
     
     System.err.print(" / " + totalProcesses + " = " + (totalWaitingTime / totalProcesses));
     System.err.println();
-
+for(int i = 0; i < Filereader.getMyList().size(); i++){
+    System.out.println("J" + Filereader.getMyList().get(i).getId() + "  ");
 }   
+}
 }
