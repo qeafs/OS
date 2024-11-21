@@ -7,23 +7,30 @@ public class processreadyqueue implements Runnable {
             ///////////////THIS IS FOR SJF ONLY//////////////////
             /////////////////////////////////////////////////////
             //////////////you can copy but DO NOT change the code please
-    int freemem;
+    volatile int  freemem;
     int timewaiting =0;
     public static int donejobs =0;
     public static ArrayList<PCB> completedjobs = new ArrayList<PCB>();
 
 
+
+
     public void run(){
         try {
-            Thread.sleep(100);
+            Thread.sleep(80);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+
+
     while(true){
+        System.out.println("\nprocessing is now runing");
         processjobs();
        //System.out.println(" ");
+
         if(SJF.getMyList2().isEmpty()){
+            System.out.println("\n I am in peinttheresult");
             peinttheresult();
             break;
         }
@@ -31,33 +38,48 @@ public class processreadyqueue implements Runnable {
 
     }
 
-    public void processjobs(){
 
-        while(SJF.getMyList2().isEmpty());
+
+
+    public void processjobs(){
+        System.out.println("\n I am in process jobs and totaljobs = "+SJF.getTotaljobs());
+        
+
+        while(donejobs < SJF.getTotaljobs()){
+
+            while(SJF.getMyList2().isEmpty()) ;//System.err.println("\nWaiting for any process to enter readyqueue"); ;
         //when starting the thread we need a loop forever tp proccess anything new.
-        while(!SJF.getMyList2().isEmpty()){ // while not empty
+
             PCB currentProcess = SJF.getMyList2().get(0);
            
                  // PRocessing the job:
-               currentProcess.bursttime--;
-               currentProcess.WaitingTime++;
+                currentProcess.bursttime--;
+                for(int i =1; i<SJF.getMyList2().size();i++){
+                    PCB Processinready = SJF.getMyList2().get(i);
+                    Processinready.WaitingTime++;
+                }
      
                  // Check if the job is done.
-                 if (currentProcess.bursttime <= 0) {
+                 if (currentProcess.bursttime == 0) {
                     donejobs++;
                     completedjobs.add(currentProcess);
                     freemem = SJF.getfreememory();
                     freemem = freemem + SJF.getMyList2().get(0).getMemory();
                     SJF.getMyList2().remove(0);
-                     SJF.setFreememory(freemem);
-                   System.out.println("id:"+currentProcess.id);
-                     
+                   
+                   //System.out.println("I am done processing :"+currentProcess.id+" Free memory = "+SJF.getfreememory());
+                   System.out.println("I am done processing :"+currentProcess.id);
+                   SJF.setFreememory(freemem);
                  }
+
                 }
     }
+
+
+
     
     public void peinttheresult(){
-         int totaltime = calcwaittime();
+         int totaltime = calctotaltime();
         System.out.println("\n\n SJF Output:");
 
         //Grantt chart
@@ -130,13 +152,14 @@ public class processreadyqueue implements Runnable {
     
     }
 
-    public int calcwaittime(){
-        completedjobs.get(0).WaitingTime=0;
+
+
+
+    public int calctotaltime(){
         int totalwaittime =0;
         int i =1;
         for(i=1; i<completedjobs.size(); i++){
             totalwaittime = totalwaittime + completedjobs.get(i-1).ogbursttime;
-            completedjobs.get(i).setWaitingTime(totalwaittime);
         }
         totalwaittime = totalwaittime + completedjobs.get(i-1).ogbursttime;
         return totalwaittime ;
