@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 public class processreadyqueue implements Runnable {
     
 
@@ -8,6 +6,7 @@ public class processreadyqueue implements Runnable {
             ///////////////THIS IS FOR SJF ONLY//////////////////
             /////////////////////////////////////////////////////
     volatile int  freemem;
+    int currentTime =0;
     public static int donejobs =0;
     //public static CopyOnWriteArrayList<PCB> completedjobs = new CopyOnWriteArrayList<PCB>();
       private static final ArrayList<PCB> completedjobs = new ArrayList<>();
@@ -56,12 +55,17 @@ public class processreadyqueue implements Runnable {
             // Process the job
             while (currentProcess.bursttime > 0) {
                 currentProcess.bursttime--;
-                for (PCB processInReady : SJF.getMyList2()) {
-                    processInReady.WaitingTime++;
+                currentTime++;
+                synchronized (SJF.LOCK) {
+                    for (PCB processInReady : SJF.getMyList2()) {
+                        processInReady.WaitingTime++;
+                    }
                 }
             }
 
             // Job completed
+            currentProcess.finishtime = currentTime;
+            currentProcess.INTturnaroundTime = currentProcess.WaitingTime + currentProcess.ogbursttime;
             donejobs++;
             completedjobs.add(currentProcess);
 
@@ -70,7 +74,7 @@ public class processreadyqueue implements Runnable {
                 SJF.LOCK.notifyAll();
             }
 
-            System.out.println("Completed job: " + currentProcess.id + " | Free memory: " + SJF.getfreememory());
+            // System.out.println("Completed job: " + currentProcess.id + " | Free memory: " + SJF.getfreememory());
         }
     }
 
@@ -86,19 +90,18 @@ public class processreadyqueue implements Runnable {
             PCB currentProcess = completedjobs.get(i);
             System.out.printf("| j%-3d",currentProcess.getId());}
             System.out.println("|");
-        for(int i=0; i<completedjobs.size(); i++){
-            System.out.printf("%-6d",completedjobs.get(i).ogbursttime);    
+            System.out.printf("%-6d",0);
+        for(int i=0; i<completedjobs.size()-1; i++){
+            System.out.printf("%-6d",completedjobs.get(i).finishtime);    
                                     }
                                     System.out.print(""+totaltime);
             
         //Turnaround time
         System.out.println("\n\n-Turnaround Times:");
-        int tTurnaround =0;
         for(int i=0; i<completedjobs.size(); i++){
         PCB currentProcess = completedjobs.get(i);
-        tTurnaround = currentProcess.ogbursttime + tTurnaround;
         System.out.print("j" + currentProcess.getId() +
-                                  ": "+tTurnaround+"ms, ");
+                                  ": "+currentProcess.INTturnaroundTime+"ms, ");
 
                                 }
         
@@ -113,20 +116,20 @@ public class processreadyqueue implements Runnable {
 
         
         System.out.println("\n\n-Average Turnaround Time:");
-        tTurnaround =0;
         int totalTurnaround=0;
         int index =0;
+        int currentProcessturaroundtime =0;
         System.out.print("(");
             for(index=0; index<completedjobs.size()-1; index++){
             PCB currentProcess = completedjobs.get(index);
-            tTurnaround = currentProcess.ogbursttime + tTurnaround;
-            totalTurnaround = tTurnaround + totalTurnaround;
-            ;System.out.print(tTurnaround+" + ");
+            currentProcessturaroundtime = currentProcess.INTturnaroundTime;
+            totalTurnaround = currentProcessturaroundtime + totalTurnaround;
+            ;System.out.print(currentProcessturaroundtime+" + ");
                     }
                     PCB currentProcess = completedjobs.get(index);
-                    tTurnaround = currentProcess.ogbursttime + tTurnaround;
-                    totalTurnaround = tTurnaround + totalTurnaround;
-                    System.out.print(tTurnaround+")"+"/"+completedjobs.size()+" = "+totalTurnaround/completedjobs.size()+"ms"); 
+                    currentProcessturaroundtime = currentProcess.INTturnaroundTime;
+                    totalTurnaround = currentProcessturaroundtime + totalTurnaround;
+                    System.out.print(currentProcessturaroundtime+")"+"/"+completedjobs.size()+" = "+totalTurnaround/completedjobs.size()+"ms"); 
                     
 
 

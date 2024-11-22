@@ -35,8 +35,9 @@ public class SJF implements Runnable{
         }
 
         totaljobs = Filereader.getMyList().size();
-        System.out.println("total jobs: "+totaljobs);
-                while(!Filereader.getMyList().isEmpty())sjftoreadyqueue();
+
+        while(!Filereader.getMyList().isEmpty())sjftoreadyqueue();
+        
      }
 
 

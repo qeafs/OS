@@ -2,18 +2,33 @@ public class PCB {
 int id;
 int bursttime;
 int memory;
-
 int WaitingTime;
+public int getArrivalTime() {
+    return arrivalTime;
+}
+
+public void setArrivalTime(int arrivalTime) {
+    this.arrivalTime = arrivalTime;
+}
+
+public void setTurnaroundTime(int turnaroundTime) {
+    this.INTturnaroundTime = turnaroundTime;
+}
+
 int startingtime;
 int finishtime;
 int ogbursttime;
+int arrivalTime;
+int INTturnaroundTime;
 double TurnaroundTime;
 
 public PCB(int id, int bursttime, int memory) {
     this.id = id;
     this.bursttime = bursttime; 
     this.memory = memory;
-    
+
+    this.arrivalTime =0;
+    this.INTturnaroundTime =0;
     this.WaitingTime = 0;
     this.TurnaroundTime = 0;
     this.startingtime =0;
@@ -25,7 +40,9 @@ public PCB(PCB pcb){
     this.id = pcb.id;
     this.bursttime = pcb.bursttime;
     this.memory = pcb.memory;
- 
+    
+    this.arrivalTime =pcb.arrivalTime;
+    this.INTturnaroundTime =pcb.INTturnaroundTime;
     this.WaitingTime = pcb.WaitingTime;
     this.TurnaroundTime = pcb.TurnaroundTime;
     this.startingtime =pcb.startingtime;
