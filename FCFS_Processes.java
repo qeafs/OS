@@ -1,4 +1,3 @@
-
 public class FCFS_Processes implements Runnable {
 
     private int currentTime = 0; // Tracks elapsed time
@@ -14,7 +13,7 @@ public class FCFS_Processes implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        numbersTimeline.append(0).append("  ")
         while (true) {
            // while (FCFS.nextprocessisreadytoenter == false) {}
             executeProcesses();
@@ -35,16 +34,19 @@ public class FCFS_Processes implements Runnable {
         FCFS.getReadyQueue().remove(0);
         numbersTimeline.append(currentTime).append("   ");
         timeline.append("| J").append(currentProcess.getId()).append(" ");
-
         // Calculate waiting time
         currentProcess.WaitingTime = currentTime;
 
         // Simulate process execution
         currentTime += currentProcess.bursttime;
+
+        
+        //apppend updated time
         numbersTimeline.append(currentTime).append("   ");
 
         // Calculate turnaround time
         currentProcess.TurnaroundTime = currentTime;
+
 
         // Update totals for statistics
         FCFS.DoneProcesses.add(currentProcess);

@@ -50,7 +50,7 @@ public class FCFS implements Runnable {
 
     private void movetoready(){
         while(!Filereader.getMyList().isEmpty()){
-            PCB cp = Filereader.getMyList().get(0);//shortest job is first job right now
+            PCB cp = Filereader.getMyList().get(0); //for the first job
 
             if(freememory >= cp.memory){    
             freememory = freememory - cp.memory;
