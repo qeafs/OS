@@ -13,7 +13,7 @@ public class FCFS_Processes implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        numbersTimeline.append(0).append("  ")
+        numbersTimeline.append(0).append("  ");
         while (true) {
            // while (FCFS.nextprocessisreadytoenter == false) {}
             executeProcesses();
