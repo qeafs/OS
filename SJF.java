@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 
 public class SJF implements Runnable{
-    private static volatile int freememory = 1024;
+    private static final int MAX_MEMORY = 1024;
+    private static volatile int freememory = MAX_MEMORY;
     public int avreagewaitingtime =0;
-    public static volatile int totaljobs=0;
+    public static int totaljobs=0;
+     public static final Object LOCK = new Object(); // Shared lock
     
     public static int getTotaljobs() {
         return totaljobs;
     }
-    public static volatile ArrayList<PCB> readyqueue = new ArrayList<PCB>();
+    private static final ArrayList<PCB> readyqueue = new ArrayList<>();
+
 
     public static synchronized ArrayList<PCB> getMyList2() {
         return readyqueue;
@@ -26,49 +29,49 @@ public class SJF implements Runnable{
     public void run(){
          
         try {
-            Thread.sleep(60);
+            Thread.sleep(25);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         totaljobs = Filereader.getMyList().size();
         System.out.println("total jobs: "+totaljobs);
-
-        while (!Filereader.getMyList().isEmpty()) {
-            sjftoreadyqueue();
-        }
-
-        System.out.println(" I am done with moving The jobs to ready queue");
-           
+                while(!Filereader.getMyList().isEmpty())sjftoreadyqueue();
      }
 
 
 
-        public synchronized void sjftoreadyqueue(){
+        public void sjftoreadyqueue(){
 
+            if(Filereader.getMyList().size() == 0)return;
             //find the shortest job in the jobqueue.
-            while(!Filereader.getMyList().isEmpty()){
                 PCB sj = Filereader.getMyList().get(0);//shortest job is first job right now
-
+           
             for(int i=0; i<Filereader.getMyList().size(); i++){
                 if(sj.bursttime > Filereader.getMyList().get(i).bursttime)
                 sj = Filereader.getMyList().get(i);
          
              }
           
-             while(getfreememory() < sj.memory){ 
-                //System.out.println();
-             }
+             synchronized (LOCK) {
+                while (getfreememory() < sj.memory) {
+                    try {
+                        LOCK.wait();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
+                }
+    
                 setFreememory(getfreememory() - sj.memory);
-                //System.out.println("\nJob "+sj.id+" entred the ready queue Freemem = "+getfreememory()+"Mb");
-                readyqueue.add(sj);//add to ready queue.
-                Filereader.getMyList().remove(sj); //remove from job queue.
-                System.out.println("\nJob "+sj.id+" entred the ready queue");
-         
+                readyqueue.add(sj);
+                Filereader.getMyList().remove(sj);
+                LOCK.notifyAll();
             }
                 
+                
+            
         }
-    
 
-     
-}
+    }
+

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class processreadyqueue implements Runnable {
     
@@ -6,31 +7,26 @@ public class processreadyqueue implements Runnable {
             /////////////////////////////////////////////////////
             ///////////////THIS IS FOR SJF ONLY//////////////////
             /////////////////////////////////////////////////////
-            //////////////you can copy but DO NOT change the code please
     volatile int  freemem;
-    int timewaiting =0;
     public static int donejobs =0;
-    public static ArrayList<PCB> completedjobs = new ArrayList<PCB>();
-
+    //public static CopyOnWriteArrayList<PCB> completedjobs = new CopyOnWriteArrayList<PCB>();
+      private static final ArrayList<PCB> completedjobs = new ArrayList<>();
 
 
 
     public void run(){
         try {
-            Thread.sleep(80);
+            Thread.sleep(40);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
 
 
-    while(true){
-        System.out.println("\nprocessing is now runing");
-        processjobs();
-       //System.out.println(" ");
+        while(true){
+         processJobs();
 
-        if(SJF.getMyList2().isEmpty()){
-            System.out.println("\n I am in peinttheresult");
+         if(SJF.getMyList2().isEmpty()){
             peinttheresult();
             break;
         }
@@ -41,38 +37,41 @@ public class processreadyqueue implements Runnable {
 
 
 
-    public void processjobs(){
-        System.out.println("\n I am in process jobs and totaljobs = "+SJF.getTotaljobs());
-        
+    private void processJobs() {
+        while (donejobs< SJF.getTotaljobs()) {
+            PCB currentProcess;
 
-        while(donejobs < SJF.getTotaljobs()){
+            synchronized (SJF.LOCK) {
+                while (SJF.getMyList2().isEmpty()) {
+                    try {
+                        SJF.LOCK.wait();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
+                }
+                currentProcess = SJF.getMyList2().remove(0);
+            }
 
-            while(SJF.getMyList2().isEmpty()) ;//System.err.println("\nWaiting for any process to enter readyqueue"); ;
-        //when starting the thread we need a loop forever tp proccess anything new.
-
-            PCB currentProcess = SJF.getMyList2().get(0);
-           
-                 // PRocessing the job:
+            // Process the job
+            while (currentProcess.bursttime > 0) {
                 currentProcess.bursttime--;
-                for(int i =1; i<SJF.getMyList2().size();i++){
-                    PCB Processinready = SJF.getMyList2().get(i);
-                    Processinready.WaitingTime++;
+                for (PCB processInReady : SJF.getMyList2()) {
+                    processInReady.WaitingTime++;
                 }
-     
-                 // Check if the job is done.
-                 if (currentProcess.bursttime == 0) {
-                    donejobs++;
-                    completedjobs.add(currentProcess);
-                    freemem = SJF.getfreememory();
-                    freemem = freemem + SJF.getMyList2().get(0).getMemory();
-                    SJF.getMyList2().remove(0);
-                   
-                   //System.out.println("I am done processing :"+currentProcess.id+" Free memory = "+SJF.getfreememory());
-                   System.out.println("I am done processing :"+currentProcess.id);
-                   SJF.setFreememory(freemem);
-                 }
+            }
 
-                }
+            // Job completed
+            donejobs++;
+            completedjobs.add(currentProcess);
+
+            synchronized (SJF.LOCK) {
+                SJF.setFreememory(SJF.getfreememory() + currentProcess.memory);
+                SJF.LOCK.notifyAll();
+            }
+
+            System.out.println("Completed job: " + currentProcess.id + " | Free memory: " + SJF.getfreememory());
+        }
     }
 
 
@@ -88,7 +87,7 @@ public class processreadyqueue implements Runnable {
             System.out.printf("| j%-3d",currentProcess.getId());}
             System.out.println("|");
         for(int i=0; i<completedjobs.size(); i++){
-            System.out.printf("%-6d",completedjobs.get(i).WaitingTime);    
+            System.out.printf("%-6d",completedjobs.get(i).ogbursttime);    
                                     }
                                     System.out.print(""+totaltime);
             
@@ -134,19 +133,21 @@ public class processreadyqueue implements Runnable {
 
 
         System.out.println("\n\n-Average Waiting Time:");
-        int Ttotaltime =0;
+     
         int totalwaitingtime=0;
         int index2=0;
+        int currentProcesswaittime =0;
         System.out.print("(");
             for(index2=0; index2<completedjobs.size()-1; index2++){
              currentProcess = completedjobs.get(index2);
-            totalwaitingtime = Ttotaltime + totalwaitingtime;
-            ;System.out.print(Ttotaltime+" + ");
-            Ttotaltime = currentProcess.ogbursttime + Ttotaltime;
+                currentProcesswaittime = currentProcess.WaitingTime;
+            totalwaitingtime = currentProcesswaittime + totalwaitingtime;
+            ;System.out.print(currentProcesswaittime+" + ");
                     }
                     currentProcess = completedjobs.get(index2);
-                    totalwaitingtime = Ttotaltime + totalwaitingtime;
-                    System.out.println(Ttotaltime+")"+"/"+completedjobs.size()+" = "+totalwaitingtime/completedjobs.size()+"ms"); 
+                    totalwaitingtime = currentProcesswaittime + totalwaitingtime;
+                    currentProcesswaittime = currentProcess.WaitingTime;
+                    System.out.println(currentProcesswaittime+")"+"/"+completedjobs.size()+" = "+totalwaitingtime/completedjobs.size()+"ms"); 
 
         System.out.println("-------------------------------------------------------------------------------------------");
     
