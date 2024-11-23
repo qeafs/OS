@@ -14,7 +14,7 @@ public class Filereader implements Runnable{
 
 @Override
 public void run() {
-    readtextfile("C:\\Users\\moham\\OneDrive\\Desktop\\job.txt");
+    readtextfile("C:\\Users\\Hmmodii\\Desktop\\ss.txt");
     
 }
 

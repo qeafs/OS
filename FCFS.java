@@ -7,6 +7,7 @@ public class FCFS implements Runnable {
     public static ArrayList<PCB> readyQueue = new ArrayList<>(); // Ready queue
     public static ArrayList<PCB> DoneProcesses = new ArrayList<>(); // Completed processes
     public static boolean nextprocessisreadytoenter = false;
+    
 
     public static ArrayList<PCB> getReadyQueue() {
         return readyQueue;
@@ -24,7 +25,7 @@ public class FCFS implements Runnable {
             movetoready();
 
             if (Filereader.getMyList().isEmpty()) {
-                empty = true; // Mark job queue as empty
+               break; // Mark job queue as empty
             }
 
             if (empty && readyQueue.isEmpty()) {
@@ -33,25 +34,10 @@ public class FCFS implements Runnable {
         }
     }
 
-    private void moveProcessesToReadyQueue() {
-        for (int i = 0; i < Filereader.getMyList().size(); i++) {
-            PCB process = Filereader.getMyList().get(0);
-            if(freememory >= process.memory){nextprocessisreadytoenter = true; System.out.println(" next process is ready");}
-            else nextprocessisreadytoenter = false;
-
-            while(freememory < process.memory); 
-                freememory -= process.memory; // Allocate memory
-                readyQueue.add(process); // Add to ready queue
-                Filereader.getMyList().remove(i); // Remove from job queue
-                System.out.println("Process "+process.id+" added ");
-                i--;
-        }
-    }
 
     private void movetoready(){
         while(!Filereader.getMyList().isEmpty()){
             PCB cp = Filereader.getMyList().get(0); //for the first job
-
             if(freememory >= cp.memory){    
             freememory = freememory - cp.memory;
             readyQueue.add(cp);//add to ready queue.

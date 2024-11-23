@@ -68,7 +68,7 @@ private void executeProcesses() {
         }
         RR.freememory += currentProcess.memory;
        try {
-        Thread.sleep(100);
+        Thread.sleep(20);
        } catch (InterruptedException e) {
         e.printStackTrace();
        }

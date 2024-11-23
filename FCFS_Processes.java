@@ -5,20 +5,21 @@ public class FCFS_Processes implements Runnable {
     private StringBuilder numbersTimeline = new StringBuilder();
     private double totalWaitingTime = 0;
     private double totalTurnaroundTime = 0;
+    private int totalProcesses = 0;
 
     @Override
     public void run() {
         try {
-            Thread.sleep(200); // Allow FCFS thread to initialize
+            Thread.sleep(300); // Allow FCFS thread to initialize
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        numbersTimeline.append(0).append("  ");
+        numbersTimeline.append(0).append("   ");
         while (true) {
            // while (FCFS.nextprocessisreadytoenter == false) {}
             executeProcesses();
 
-            if (FCFS.empty && FCFS.getReadyQueue().isEmpty()) {
+            if (Filereader.getMyList().isEmpty() && FCFS.getReadyQueue().isEmpty()) {
                 printResults();
                 break; // Stop when all processes are completed
             }
@@ -27,58 +28,77 @@ public class FCFS_Processes implements Runnable {
 
     private void executeProcesses() {
         
-        while(FCFS.getReadyQueue().isEmpty());
-        //when starting the thread we need a loop forever tp proccess anything new.
+         if (FCFS.getReadyQueue().isEmpty()) {
+        return;
+        }  
+       
 
         PCB currentProcess = FCFS.getReadyQueue().get(0); // Dequeue first process
-        FCFS.getReadyQueue().remove(0);
-        numbersTimeline.append(currentTime).append("   ");
-        timeline.append("| J").append(currentProcess.getId()).append(" ");
-        // Calculate waiting time
-        currentProcess.WaitingTime = currentTime;
-
-        // Simulate process execution
+        System.out.print("=====");
+        FCFS.getReadyQueue().remove(currentProcess);
         currentTime += currentProcess.bursttime;
-
-        
-        //apppend updated time
+        currentProcess.TurnaroundTime = currentProcess.WaitingTime + currentProcess.bursttime + currentProcess.TurnaroundTime;
+        totalProcesses++;
+        timeline.append("| J").append(currentProcess.getId()).append(" ");
         numbersTimeline.append(currentTime).append("   ");
-
-        // Calculate turnaround time
-        currentProcess.TurnaroundTime = currentTime;
-
-
-        // Update totals for statistics
         FCFS.DoneProcesses.add(currentProcess);
-        totalWaitingTime += currentProcess.WaitingTime;
-        totalTurnaroundTime += currentProcess.TurnaroundTime;
-
-        // Free memory after process execution
+     
+        for(int i = 0; i < FCFS.getReadyQueue().size(); i++){
+                FCFS.getReadyQueue().get(i).WaitingTime = FCFS.getReadyQueue().get(i).WaitingTime + currentProcess.bursttime;
+        }
+        
         FCFS.freememory += currentProcess.memory;
     }
 
+
+
+
+
+
+
     private void printResults() {
+     
         System.out.println("\nFCFS Timeline:");
-        System.out.println(timeline);
+        System.out.println(timeline+"|");
         System.out.println(numbersTimeline);
 
-        System.out.println("\nWaiting Times:");
-        for (PCB process : FCFS.DoneProcesses) {
-            System.out.println("J" + process.getId() + ": " + process.WaitingTime + "ms");
-        }
 
-        System.out.println("\nTurnaround Times:");
-        for (PCB process : FCFS.DoneProcesses) {
-            System.out.println("J" + process.getId() + ": " + process.TurnaroundTime + "ms");
-        }
+
+    System.out.println("Turnaround Times: ");
+    for(int i = 0; i < FCFS.DoneProcesses.size(); i++){
+        System.out.print("J" + FCFS.DoneProcesses.get(i).getId() + ": " + FCFS.DoneProcesses.get(i).TurnaroundTime + ", ");
+    }
+    System.out.println("");
+
+    System.out.println("\nWaiting Times:");
+    for(int i = 0; i < FCFS.DoneProcesses.size(); i++){
+        System.out.print("J" + FCFS.DoneProcesses.get(i).getId() + ": " + FCFS.DoneProcesses.get(i).WaitingTime + ", ");
+    }
+
                 // Mohammed is my uncle 
+    System.out.println("");
+    System.out.println("");
+
+       
+     // Calculate and print averages
+     //Average Total turnaround
+    System.out.println("Average Turnaround Time: " );
+    for(int i = 0; i < FCFS.DoneProcesses.size(); i++){
+        totalTurnaroundTime += FCFS.DoneProcesses.get(i).TurnaroundTime;
+    }
+    System.out.print(totalTurnaroundTime / totalProcesses);
+    System.out.println("");
 
 
-        // Calculate and print averages
-        double avgWaitingTime = totalWaitingTime / FCFS.DoneProcesses.size();
-        double avgTurnaroundTime = totalTurnaroundTime / FCFS.DoneProcesses.size();
 
-        System.out.printf("\nAverage Waiting Time: %.2fms\n", avgWaitingTime);
-        System.out.printf("Average Turnaround Time: %.2fms\n", avgTurnaroundTime);
+    //Average total waiting
+    System.out.println("Average Wait Time: " );
+    for(int i = 0; i < FCFS.DoneProcesses.size(); i++){
+        totalWaitingTime += FCFS.DoneProcesses.get(i).WaitingTime;
+    }
+    System.out.print(totalWaitingTime / totalProcesses);
+    System.out.println("");
+
+
     }
 }

@@ -43,8 +43,8 @@ class mainclass{
         Thread thread1 = new Thread(runnable);
         Thread thread2 = new Thread(runnable2);
         Thread thread3 = new Thread(runnable3);
-        thread1.run();
-        waitforabit();
+        thread1.start();
+        //waitforabit();
         thread2.start();
         thread3.start();
     }
@@ -57,7 +57,7 @@ class mainclass{
         Thread thread2 = new Thread(runnable2);
         Thread thread3 = new Thread(runnable3);
         thread1.start();
-        waitforabit();
+       // waitforabit();
         thread2.start();
         thread3.start();
 
